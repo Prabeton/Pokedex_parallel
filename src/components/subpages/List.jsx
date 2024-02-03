@@ -1,18 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-
 import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 
-import useGetPokemons from "../../hooks/useGetPokemons";
-import Card from "../shared/Card";
-import PokemonDetailsModal from "../shared/PokemonDetailsModal";
-
-import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
+import useGetPokemons from "../../hooks/useGetPokemons";
+
+import { Card, PokemonDetailsModal } from "../shared";
+
+const VITE_NEWPOKEMONS = import.meta.env.VITE_NEWPOKEMONS;
 
 const Container = styled.div`
-  max-width: 1440px;
+  max-width: 1900px;
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -21,6 +20,28 @@ const Container = styled.div`
   flex-direction: column;
   padding-bottom: 30px;
   margin-top: 60px;
+
+  @media (min-width: 1721px) and (max-width: 1920px) {
+    max-width: 1721px;
+  }
+  @media (min-width: 1441px) and (max-width: 1720px) {
+    max-width: 1441px;
+  }
+  @media (min-width: 1281px) and (max-width: 1440px) {
+    max-width: 1281px;
+  }
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    max-width: 1025px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    max-width: 769px;
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    max-width: 481px;
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    max-width: 320px;
+  }
 `;
 
 const CardContainer = styled.div`
@@ -33,7 +54,7 @@ const CardContainer = styled.div`
   gap: 30px;
 `;
 
-const Prev = styled.button`
+const Prev_Next = styled.button`
   width: 150px;
   height: 50px;
   border-radius: 8px;
@@ -53,8 +74,20 @@ const Prev = styled.button`
     border: 3px inset #ffff00;
     color: #ffff00;
   }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    width: 150px;
+    font-size: 16px;
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    width: 120px;
+    font-size: 14px;
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    width: 80px;
+    font-size: 14px;
+  }
 `;
-const Next = styled(Prev)``;
 
 const Pagination = styled.div`
   width: 100%;
@@ -90,6 +123,34 @@ const CustomTextField = styled(TextField)`
   &:focus-within label {
     color: green;
   }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    && {
+      width: 200px;
+    }
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    && {
+      width: 150px;
+    }
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    && {
+      width: 130px;
+    }
+  }
+`;
+
+const PageNumber = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  color: #d8bfd8;
+  border: 3px solid #d8bfd8;
+  border-radius: 8px;
 `;
 
 const List = () => {
@@ -97,28 +158,12 @@ const List = () => {
   const [allPokemons, setAllPokemons] = useState([]);
   const { pokemons } = useGetPokemons();
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3002/newPokemons")
-      .then((response) => {
-        const newPokemons = response.data;
-        console.log("newPokemons:", newPokemons);
-
-        if (pokemons) {
-          setAllPokemons([...pokemons, ...newPokemons]);
-        } else {
-          setAllPokemons([...newPokemons]);
-        }
-      })
-      .catch((error) => {
-        console.error("Błąd odczytu nowych pokemonów:", error);
-      });
-  }, [actualityPokemonsTable, newPokemonsTable, pokemons]);
-
   const itemsPerPage = 15;
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPokemon, setSelectedPokemon] = useState(null);
+
+  // ----------------------------------------------------------------
 
   const filteredPokemons = searchTerm
     ? allPokemons.filter((pokemon) =>
@@ -159,24 +204,43 @@ const List = () => {
   };
   // ----------------------------------------------------------------
 
+  useEffect(() => {
+    axios
+      .get(VITE_NEWPOKEMONS)
+      .then((response) => {
+        const newPokemons = response.data;
+        console.log("newPokemons:", newPokemons);
+
+        if (pokemons) {
+          setAllPokemons([...pokemons, ...newPokemons]);
+        } else {
+          setAllPokemons([...newPokemons]);
+        }
+      })
+      .catch((error) => {
+        console.error("Błąd odczytu nowych pokemonów:", error);
+      });
+  }, [actualityPokemonsTable, newPokemonsTable, pokemons]);
+
   return (
     <Container>
       <Pagination>
-        <Prev onClick={handlePrevPage} disabled={currentPage === 1}>
+        <Prev_Next onClick={handlePrevPage} disabled={currentPage === 1}>
           P R E V
-        </Prev>
-        <CustomTextField
-          label="Wprowadź nazwę pokemona"
-          variant="outlined"
-          onChange={handleInputChange}
-          value={searchTerm}
-        />
-        <Next
+        </Prev_Next>
+        <PageNumber>{currentPage}</PageNumber>
+        <Prev_Next
           onClick={handleNextPage}
           disabled={endIndex >= allPokemons.length}>
           N E X T
-        </Next>
+        </Prev_Next>
       </Pagination>
+      <CustomTextField
+        label="Wprowadź nazwę pokemona"
+        variant="outlined"
+        onChange={handleInputChange}
+        value={searchTerm}
+      />
       {selectedPokemon && (
         <PokemonDetailsModal
           pokemon={selectedPokemon}

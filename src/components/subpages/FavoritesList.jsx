@@ -1,13 +1,15 @@
+import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { useState, useEffect } from "react";
-import Card from "../shared/Card";
-import PokemonDetailsModal from "../shared/PokemonDetailsModal";
-import { useContext } from "react";
+
 import { AppContext } from "../../context/AppContext";
 
+import { Card, PokemonDetailsModal } from "../shared";
+
+const VITE_FAVORITES = import.meta.env.VITE_FAVORITES;
+
 const Container = styled.div`
-  max-width: 1440px;
+  max-width: 1900px;
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -16,6 +18,28 @@ const Container = styled.div`
   flex-direction: column;
   padding-bottom: 30px;
   margin-top: 60px;
+
+  @media (min-width: 1721px) and (max-width: 1920px) {
+    max-width: 1721px;
+  }
+  @media (min-width: 1441px) and (max-width: 1720px) {
+    max-width: 1441px;
+  }
+  @media (min-width: 1281px) and (max-width: 1440px) {
+    max-width: 1281px;
+  }
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    max-width: 1025px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    max-width: 769px;
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    max-width: 481px;
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    max-width: 320px;
+  }
 `;
 
 const CardContainer = styled.div`
@@ -28,7 +52,7 @@ const CardContainer = styled.div`
   gap: 30px;
 `;
 
-const Prev = styled.button`
+const Prev_Next = styled.button`
   width: 150px;
   height: 50px;
   border-radius: 8px;
@@ -49,7 +73,6 @@ const Prev = styled.button`
     color: #ffff00;
   }
 `;
-const Next = styled(Prev)``;
 
 const Pagination = styled.div`
   width: 100%;
@@ -59,15 +82,27 @@ const Pagination = styled.div`
   justify-content: space-around;
 `;
 
+const PageNumber = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  color: #d8bfd8;
+  border: 3px solid #d8bfd8;
+  border-radius: 8px;
+`;
+
 function FavoritesList() {
-  const [favorites, setFavorites] = useState([]);
   const itemsPerPage = 15;
+  const [favorites, setFavorites] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
   const { newFavoritesTable } = useContext(AppContext);
   useEffect(() => {
     axios
-      .get("http://localhost:3002/favorites")
+      .get(VITE_FAVORITES)
       .then((response) => {
         setFavorites(response.data);
       })
@@ -98,13 +133,15 @@ function FavoritesList() {
   return (
     <Container>
       <Pagination>
-        <Prev onClick={handlePrevPage} disabled={currentPage === 1}>
+        <Prev_Next onClick={handlePrevPage} disabled={currentPage === 1}>
           P R E V
-        </Prev>
-
-        <Next onClick={handleNextPage} disabled={endIndex >= favorites.length}>
+        </Prev_Next>
+        <PageNumber>{currentPage}</PageNumber>
+        <Prev_Next
+          onClick={handleNextPage}
+          disabled={endIndex >= favorites.length}>
           N E X T
-        </Next>
+        </Prev_Next>
       </Pagination>
       {selectedPokemon && (
         <PokemonDetailsModal

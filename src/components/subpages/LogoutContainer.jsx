@@ -34,21 +34,7 @@ const Container = styled.div`
   }
 `;
 
-const InfoError = styled.div`
-  width: 70%;
-  max-width: 1280px;
-  height: auto;
-  text-align: center;
-`;
-
-const NotFound = () => {
-  return (
-    <Container>
-      <InfoError>
-        <h1>Not Found</h1>
-        <h3>Użyj nawigacji albo wpisz poprawny adres url</h3>
-      </InfoError>
-    </Container>
-  );
+const LogoutContainer = ({ children }) => {
+  return <Container>{children}</Container>;
 };
-export default NotFound;
+export default LogoutContainer;

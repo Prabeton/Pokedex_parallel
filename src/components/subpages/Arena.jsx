@@ -1,25 +1,52 @@
+import { useState, useContext } from "react";
 import styled from "styled-components";
-import { useState } from "react";
-import { useContext } from "react";
+
 import { AppContext } from "../../context/AppContext";
-import Card from "../shared/Card";
-import Topor from "../../icons/svg/Topor";
-import Crown from "../../icons/svg/Crown";
+
+import { Card } from "../shared";
+import { Crown, Axe } from "../../icons/svg";
 
 const Container = styled.div`
-  max-width: 1440px;
-  width: 100%;
+  max-width: 1900px;
+  height: 900px;
   min-height: 100vh;
   display: flex;
   justify-content: start;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
   padding-bottom: 30px;
   margin-top: 60px;
+
+  @media (min-width: 1721px) and (max-width: 1920px) {
+    max-width: 1721px;
+  }
+  @media (min-width: 1441px) and (max-width: 1720px) {
+    max-width: 1441px;
+  }
+  @media (min-width: 1281px) and (max-width: 1440px) {
+    max-width: 1281px;
+  }
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    max-width: 1025px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    max-width: 769px;
+    height: auto;
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    max-width: 481px;
+    height: auto;
+    padding-top: 120px;
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    max-width: 320px;
+    border-top: 5px solid rgba(0, 0, 0, 0.2);
+    padding-top: 10px;
+  }
 `;
 
 const Cage = styled.div`
-  max-width: 1440px;
+  max-width: 1860px;
   width: 100%;
   height: 700px;
   border: 30px solid rgba(0, 0, 0, 0.2);
@@ -29,6 +56,19 @@ const Cage = styled.div`
   justify-content: space-around;
   align-items: center;
   flex-direction: row;
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    flex-direction: column;
+    height: auto;
+    gap: 50px;
+    border: none;
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    flex-direction: column;
+    height: auto;
+    gap: 50px;
+    border: none;
+  }
 `;
 
 const CornerBlue = styled.div`
@@ -63,7 +103,7 @@ const WinnerBlue = styled.div`
   border-radius: 15px;
   position: absolute;
   top: 27px;
-  left: -470px;
+  left: -610px;
   z-index: 1000;
   font-family: "Pokemon-Solid";
   font-size: 24px;
@@ -74,9 +114,58 @@ const WinnerBlue = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (min-width: 1721px) and (max-width: 1920px) {
+    left: -560px;
+  }
+  @media (min-width: 1441px) and (max-width: 1720px) {
+    left: -470px;
+  }
+  @media (min-width: 1281px) and (max-width: 1440px) {
+    left: -420px;
+  }
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    left: -320px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    left: -270px;
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    left: -30px;
+    top: -220px;
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    left: -30px;
+    top: -220px;
+  }
 `;
+
 const WinnerRed = styled(WinnerBlue)`
-  left: 420px;
+  left: 560px;
+
+  @media (min-width: 1721px) and (max-width: 1920px) {
+    left: 500px;
+  }
+  @media (min-width: 1441px) and (max-width: 1720px) {
+    left: 410px;
+  }
+  @media (min-width: 1281px) and (max-width: 1440px) {
+    left: 350px;
+  }
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    left: 270px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    left: 200px;
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    left: -30px;
+    top: 320px;
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    left: -30px;
+    top: 320px;
+  }
 `;
 
 const LostRed = styled.div`
@@ -86,7 +175,7 @@ const LostRed = styled.div`
   border-radius: 15px;
   position: absolute;
   top: 27px;
-  left: 420px;
+  left: 560px;
   z-index: 1000;
   font-family: "Pokemon-Solid";
   font-size: 24px;
@@ -95,10 +184,58 @@ const LostRed = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (min-width: 1721px) and (max-width: 1920px) {
+    left: 500px;
+  }
+  @media (min-width: 1441px) and (max-width: 1720px) {
+    left: 410px;
+  }
+  @media (min-width: 1281px) and (max-width: 1440px) {
+    left: 350px;
+  }
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    left: 270px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    left: 190px;
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    left: -30px;
+    top: 280px;
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    left: -30px;
+    top: 280px;
+  }
 `;
 
 const LostBlue = styled(LostRed)`
-  left: -470px;
+  left: -620px;
+
+  @media (min-width: 1721px) and (max-width: 1920px) {
+    left: -560px;
+  }
+  @media (min-width: 1441px) and (max-width: 1720px) {
+    left: -470px;
+  }
+  @media (min-width: 1281px) and (max-width: 1440px) {
+    left: -420px;
+  }
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    left: -330px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    left: -250px;
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    left: -30px;
+    top: -260px;
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    left: -30px;
+    top: -260px;
+  }
 `;
 
 const DrawBlue = styled.div`
@@ -108,7 +245,7 @@ const DrawBlue = styled.div`
   border-radius: 15px;
   position: absolute;
   top: 27px;
-  left: -470px;
+  left: -610px;
   z-index: 1000;
   font-family: "Pokemon-Solid";
   font-size: 24px;
@@ -119,16 +256,72 @@ const DrawBlue = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (min-width: 1721px) and (max-width: 1920px) {
+    left: -560px;
+  }
+  @media (min-width: 1441px) and (max-width: 1720px) {
+    left: -470px;
+  }
+  @media (min-width: 1281px) and (max-width: 1440px) {
+    left: -420px;
+  }
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    left: -320px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    left: -270px;
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    left: -30px;
+    top: -220px;
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    left: -30px;
+    top: -220px;
+  }
 `;
+
 const DrawRed = styled(DrawBlue)`
-  left: 420px;
+  left: 560px;
+
+  @media (min-width: 1721px) and (max-width: 1920px) {
+    left: 500px;
+  }
+  @media (min-width: 1441px) and (max-width: 1720px) {
+    left: 410px;
+  }
+  @media (min-width: 1281px) and (max-width: 1440px) {
+    left: 350px;
+  }
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    left: 270px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    left: 200px;
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    left: -30px;
+    top: 320px;
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    left: -30px;
+    top: 320px;
+  }
 `;
 
 const CageLabel = styled.div`
-  position: absolute;
   font-size: 43px;
-  left: 580px;
-  top: -47px;
+  margin-bottom: 50px;
+  position: absolute;
+  top: -50px;
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    top: -130px;
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    top: -130px;
+  }
 `;
 
 const BlueCornerLabel = styled.div`
@@ -231,11 +424,13 @@ const CloseButton = styled.button`
 `;
 const ClearTheArena = styled.button`
   width: 300px;
-  height: 100px;
+  height: 150px;
   border: 14px solid #044957;
   border-radius: 20px;
   position: absolute;
-  top: 700px;
+  top: 55%;
+  left: 50%;
+  transform: translateX(-50%);
   color: #fff;
   font-size: 34px;
   background-color: transparent;
@@ -253,6 +448,34 @@ const ClearTheArena = styled.button`
   &:active {
     font-family: "Pokemon-Solid";
     border: 10px solid #e3b10e;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    left: 50%;
+    width: 200px;
+    height: 140px;
+    transform: translateX(-40%);
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    top: 57%;
+    left: 51%;
+    width: 180px;
+    height: 140px;
+    transform: translateX(-50%);
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    top: 92%;
+    left: 50%;
+    width: 200px;
+    height: 140px;
+    transform: translateX(-50%);
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    top: 55%;
+    left: 50%;
+    width: 200px;
+    height: 130px;
+    transform: translateX(-50%);
   }
 `;
 
@@ -325,7 +548,7 @@ const Arena = () => {
               imageURL={blueCornerPokemon.imageURL}
             />
           ) : (
-            <Topor size={150} fill={"rgba(0, 0, 0, 0.2)"} />
+            <Axe size={150} fill={"rgba(0, 0, 0, 0.2)"} />
           )}
         </CornerBlue>
         <FightButton
@@ -400,7 +623,7 @@ const Arena = () => {
               imageURL={redCornerPokemon.imageURL}
             />
           ) : (
-            <Topor size={150} fill={"rgba(0, 0, 0, 0.2)"} />
+            <Axe size={150} fill={"rgba(0, 0, 0, 0.2)"} />
           )}
         </CornerRed>
       </Cage>

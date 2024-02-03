@@ -1,11 +1,13 @@
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { useState, useEffect } from "react";
 import styled from "styled-components";
-import Heart from "../../icons/svg/HeartIcon";
-import CircleMechTwo from "../../icons/svg/CircleMechTwo";
-import Topor from "../../icons/svg/Topor";
-import { useContext } from "react";
+import { useSnackbar } from "notistack";
+
 import { AppContext } from "../../context/AppContext";
+
+import { HeartIcon, CircleMechTwo, Axe } from "../../icons/svg";
+
+const VITE_FAVORITES = import.meta.env.VITE_FAVORITES;
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -13,7 +15,7 @@ const ModalOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: #00000080;
   backdrop-filter: blur(5px);
   display: flex;
   justify-content: center;
@@ -24,16 +26,31 @@ const ModalOverlay = styled.div`
 const ModalContainer = styled.div`
   width: 800px;
   height: 600px;
-  background-color: rgba(22, 102, 221, 0.5);
+  background-color: #1666dd7f;
   border: 4px solid #16d816;
   border-radius: 30px;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin: 30px 0;
   position: relative;
   padding: 30px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    max-width: 650px;
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    max-width: 400px;
+    flex-direction: column;
+    gap: 20px;
+    height: auto;
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    max-width: 270px;
+    flex-direction: column;
+    gap: 20px;
+    height: auto;
+  }
 `;
 
 const Img = styled.img`
@@ -130,11 +147,9 @@ const ButtonFavorites = styled.button`
     border: 3px solid #e40a07;
   }
 `;
-const ButtonArena = styled(ButtonFavorites)``;
-const ButtonWorkshop = styled(ButtonFavorites)``;
 
-/* eslint-disable */
 const PokemonDetailsModal = ({ pokemon, onClose }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const [isFavorites, setIsFavorites] = useState(false);
   const {
     isLogin,
@@ -183,7 +198,7 @@ const PokemonDetailsModal = ({ pokemon, onClose }) => {
 
   const addToFavorites = () => {
     axios
-      .post("http://localhost:3002/favorites", dataToSaveFavorites)
+      .post(VITE_FAVORITES, dataToSaveFavorites)
       .then((response) => {
         console.log("Dodano do ulubionych:", response.data);
         setIsFavorites(true);
@@ -192,7 +207,7 @@ const PokemonDetailsModal = ({ pokemon, onClose }) => {
         console.error("Błąd dodawania do ulubionych:", error);
       });
     axios
-      .get("http://localhost:3002/favorites")
+      .get(VITE_FAVORITES)
       .then((updatedData) => {
         actualityFavoritesTable(updatedData);
       })
@@ -206,7 +221,7 @@ const PokemonDetailsModal = ({ pokemon, onClose }) => {
 
   const removeFromFavorites = () => {
     axios
-      .delete(`http://localhost:3002/favorites/${pokemon.id}`)
+      .delete(`${VITE_FAVORITES}${pokemon.id}`)
       .then((response) => {
         console.log("Usunięto z ulubionych:", response.data);
         setIsFavorites(false);
@@ -216,7 +231,7 @@ const PokemonDetailsModal = ({ pokemon, onClose }) => {
         console.error("Błąd usuwania z ulubionych:", error);
       });
     axios
-      .get("http://localhost:3002/favorites")
+      .get(VITE_FAVORITES)
       .then((updatedData) => {
         actualityFavoritesTable(updatedData);
       })
@@ -239,7 +254,7 @@ const PokemonDetailsModal = ({ pokemon, onClose }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3002/favorites")
+      .get(VITE_FAVORITES)
       .then((response) => {
         const favorites = response.data;
         const isPokemonFavorite = favorites.some(
@@ -269,34 +284,46 @@ const PokemonDetailsModal = ({ pokemon, onClose }) => {
         </Column>
         <Column>
           <ButtonFavorites onClick={handleClickFavorites}>
-            <p>dodaj do ulubionych</p>
-            <Heart
+            {isFavorites ? (
+              <p>usun z ulubionych</p>
+            ) : (
+              <p>dodaj do ulubionych</p>
+            )}
+            <HeartIcon
               size={34}
-              fill={isFavorites ? "red" : "gray"}
+              fill={isFavorites ? "#FF0000" : "#808080"}
               stroke="none"
             />
           </ButtonFavorites>
-          <ButtonArena
+          <ButtonFavorites
             disabled={blueCornerPokemon && redCornerPokemon}
             onClick={() => {
               blueCornerPokemon
                 ? addToCornerRed(pokemonToArena)
                 : addToCornerBlue(pokemonToArena);
+              enqueueSnackbar("Dodałeś pokemona do areny", {
+                variant: "success",
+              });
             }}>
             {blueCornerPokemon && redCornerPokemon ? (
               <p>arena jest pelna !</p>
             ) : (
               <p>dodaj do areny</p>
             )}
-            <Topor size={34} fill={"red"} />
-          </ButtonArena>
-          {isLogin ? (
-            <ButtonWorkshop
-              onClick={() => addPokemonToWorkshop(pokemonToWorkshop)}>
-              <p>dodaj do warszatu</p>
-              <CircleMechTwo size={34} fill={"#00ff00"} stroke={"#00ff00"} />
-            </ButtonWorkshop>
-          ) : null}
+            <Axe size={34} fill={"#FF0000"} />
+          </ButtonFavorites>
+          {isLogin && (
+            <ButtonFavorites
+              onClick={() => {
+                addPokemonToWorkshop(pokemonToWorkshop);
+                enqueueSnackbar("Dodałeś pokemona do warsztatu", {
+                  variant: "success",
+                });
+              }}>
+              <p>dodaj do warsztatu</p>
+              <CircleMechTwo size={34} fill="#00ff00" stroke="#00ff00" />
+            </ButtonFavorites>
+          )}
         </Column>
       </ModalContainer>
     </ModalOverlay>

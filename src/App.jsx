@@ -1,6 +1,8 @@
-import { AppContextProvider } from "./context/AppContext";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { SnackbarProvider } from "notistack";
+
+import { AppContextProvider } from "./context/AppContext";
+
 import RouterApp from "./RouterApp";
 import GlobalStyles from "./services/GlobalStyles";
 

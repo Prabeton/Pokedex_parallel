@@ -1,4 +1,3 @@
-/* eslint-disable-next-line */
 function HeartIcon({ size, fill, stroke }) {
   return (
     <svg

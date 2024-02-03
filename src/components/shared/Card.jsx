@@ -1,4 +1,7 @@
+import { useContext } from "react";
 import styled from "styled-components";
+
+import { AppContext } from "../../context/AppContext";
 
 const CardContainer = styled.div`
   width: 240px;
@@ -10,7 +13,7 @@ const CardContainer = styled.div`
   align-items: center;
   justify-content: space-around;
   padding: 0;
-  background-color: #e9e95b;
+  background-color: ${(props) => (props.isDarkTheme ? "#cce628" : "#ab5eb2")};
 
   transition: transform 0.2s ease-in-out;
   &:hover {
@@ -80,7 +83,7 @@ const Label = styled.p`
 const ProperDiv = styled.div`
   position: relative;
 `;
-/* eslint-disable */
+
 const Card = ({
   imageURL,
   name,
@@ -89,10 +92,11 @@ const Card = ({
   height,
   abilities,
   onClick,
-  /* eslint-enable */
 }) => {
+  const { isDarkTheme } = useContext(AppContext);
   return (
     <CardContainer
+      isDarkTheme={isDarkTheme}
       onClick={() =>
         onClick({ imageURL, name, base_experience, weight, height, abilities })
       }>

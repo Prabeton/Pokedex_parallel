@@ -1,24 +1,26 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Navbar from "./components/subpages/Navbar";
-import List from "./components/subpages/List";
-import Register from "./components/subpages/Register";
-import Login from "./components/subpages/Login";
-import Edition from "./components/subpages/Edition";
-import FavoritesList from "./components/subpages/FavoritesList";
-import NotFound from "./components/subpages/NotFound";
-import Arena from "./components/subpages/Arena";
-import TemporaryContainer from "./components/shared/TemporaryContainer";
+import {
+  Navbar,
+  List,
+  Register,
+  Login,
+  Edition,
+  FavoritesList,
+  NotFound,
+  Arena,
+  LogoutContainer,
+} from "./components/subpages";
 
 function RouterApp() {
   return (
     <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route
           path="/"
           element={
             <>
-              <Navbar />
               <List />
             </>
           }
@@ -27,7 +29,6 @@ function RouterApp() {
           path="/home"
           element={
             <>
-              <Navbar />
               <List />
             </>
           }
@@ -36,7 +37,6 @@ function RouterApp() {
           path="/arena"
           element={
             <>
-              <Navbar />
               <Arena />
             </>
           }
@@ -45,7 +45,6 @@ function RouterApp() {
           path="/favorites"
           element={
             <>
-              <Navbar />
               <FavoritesList />
             </>
           }
@@ -54,7 +53,6 @@ function RouterApp() {
           path="/login"
           element={
             <>
-              <Navbar />
               <Login />
             </>
           }
@@ -63,7 +61,6 @@ function RouterApp() {
           path="/register"
           element={
             <>
-              <Navbar />
               <Register />
             </>
           }
@@ -72,7 +69,6 @@ function RouterApp() {
           path="/edition"
           element={
             <>
-              <Navbar />
               <Edition />
             </>
           }
@@ -81,8 +77,7 @@ function RouterApp() {
           path="/logout"
           element={
             <>
-              <Navbar />
-              <TemporaryContainer>Zostales wylogowany</TemporaryContainer>
+              <LogoutContainer>Zostales wylogowany</LogoutContainer>
             </>
           }
         />
@@ -90,7 +85,6 @@ function RouterApp() {
           path="*"
           element={
             <>
-              <Navbar />
               <NotFound />
             </>
           }

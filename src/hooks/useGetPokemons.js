@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
+const VITE_URL = import.meta.env.VITE_URL;
+
 const getPokemons = async () => {
-  const { data } = await axios.get(
-    "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=151"
-  );
+  const { data } = await axios.get(`${VITE_URL}?offset=0&limit=151`);
   const detailedPokemons = await Promise.all(
     data.results.map(async (pokemon) => {
       const response = await axios.get(pokemon.url);

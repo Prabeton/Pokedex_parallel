@@ -5,7 +5,8 @@ I. Cel projektu, krótki opis projektu i ogólne funkcje. Napisać jak projekt w
 
 Cel powstania projektu był na początku czysto szkoleniowy. Chodziło w nim o podsumowanie i praktyczne wykorzystanie zdobytej wcześniej wiedzy poprzez stworzenie niewielkiej aplikacji webowej. Zakres materiału objemuje takie technologie jak: HTML, CSS, JavaScript i bibliotekę React oraz kożysta z wielu innych bibliotek tj. "Notistack", "uuid", "react-query" i innych.
 Aplikacja wykorzystuje pokemon API aby dostarczyć użytkownikowi mnóstwa informacji na temat samych pokemonów, ich zwyczajów i wielu umiejętności.
-Pokemony są pokazywane w Kartach dzie widać ich imię, zjdjęcie i cztery własności. Aplikacja wyświetla je wszystkie w komponencie List - jest to strona główna aplikacji. Po kliknięciu w Kartę pokemona przechodzimy do osobnego okna gdzie mamy wyszczególnione jego cechy i możliwość dodnia pokemona do zakładki "ulubione" jak również możemy dodać pokemona do Areny gdzie po dodaniu kolejnego mogą stoczyć walkę i zostaje ogłoszony zwycięzca. Dla zalogowanych urzytkowników jest jeszcze jedna opcja - dodanie do warsztatu gdzie możemy nadać pokemonowi nowe imię i zmienić wartoooooosci jego cech. Nowo utworzonego pokemona zapisujemy korzystając z 'json-server'. Za pomocą 'json-server' zapisywane są również pokemony dodane do ulubionych. Odświerzanie i wyświetlanie list - zarówno nowych pokemonów jak i ulubionych - odbywa się w czasie rzeczywistym. W aplikacji mamy oczywiście system rejestracji i logowania. Aplikacja wydaje się rozwojowa. Możnaby docelowo "ulubione" traktować jako własne pokemony, które szkolimy a potem walczymy nimi na arenie. System "wzbogacania" umiejętności pokemonów możnaby oprzeć na zdobywanych punktach. Niestety tej mechaniki nie zaimplementowałem.  
+Pokemony są pokazywane w Kartach dzie widać ich imię, zjdjęcie i cztery własności. Aplikacja wyświetla je wszystkie w komponencie List - jest to strona główna aplikacji. Po kliknięciu w Kartę pokemona przechodzimy do osobnego okna gdzie mamy wyszczególnione jego cechy i możliwość dodnia pokemona do zakładki "ulubione" jak również możemy dodać pokemona do Areny gdzie po dodaniu kolejnego mogą stoczyć walkę i zostaje ogłoszony zwycięzca. Dla zalogowanych urzytkowników jest jeszcze jedna opcja - dodanie do warsztatu gdzie możemy nadać pokemonowi nowe imię i zmienić wartoooooosci jego cech. Nowo utworzonego pokemona zapisujemy korzystając z 'json-server'. Za pomocą 'json-server' zapisywane są również pokemony dodane do ulubionych. Odświerzanie i wyświetlanie list - zarówno nowych pokemonów jak i ulubionych - odbywa się w czasie rzeczywistym. W aplikacji mamy oczywiście system rejestracji i logowania. Aplikacja wydaje się rozwojowa. Możnaby docelowo "ulubione" traktować jako własne pokemony, które szkolimy a potem walczymy nimi na arenie. System "wzbogacania" umiejętności pokemonów możnaby oprzeć na zdobywanych punktach. Niestety tej mechaniki nie zaimplementowałem.
+
 ---------------------------------------- \* ----------------------------------
 II. Uruchomienie Aplikacji w środowisku developerskim.
 
@@ -57,12 +58,46 @@ VI. Zarządzanie Stanem: Opis wykorzystania stanu w aplikacji, np context
 W aplikacji wykorzystuję context do przechowywania i zarządzania zmiennymi, które wykorzystuje globalnie. Są to zmienne: isDarkTheme, isLogin, workshopBody, blueCornerPokemon, redCornerPokemon. Do zarządzania stanem można też wykorzystać biblitekę 'react-query'.
 
 ---------------------------------------- \* ----------------------------------
-VII. Stylowanie: Informacja o przyjętym wariancie styli:
+VII. Stylowanie - Informacja o przyjętym wariancie styli / inne przyjęte konwencje
 
 Przyjąłem warian z urzyciem biblioteki 'styled-components' i tak jest włąściwie w całym projekcie z wyjątkiem kompnentu <TextField />,
 który pochodzi z biblioteki Matrial-UI i pełni rolę szukajki.
 Style globalne też pozostają wykonane wraz z biblioteką 'styled-components'.
+
 ---------------------------------------- \* ----------------------------------
+IX. Rozszerzenia plików. W Komponentach zwracających skłądnię <jsx> stosuję rozszerzenie `.jsx` a jeśli zwracają `javascript` to `.js`.
+
+----------------------------------------- \* ---------------------------------
+X. Konwencja kolejności importów. Obrazowo przyjąłem taką:
+
+//biblioteki
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import styled from "styled-components";
+import TextField from "@mui/material/TextField";
+
+//hooki i konteksty
+import useGetPokemons from "../../hooks/useGetPokemons";
+import { AppContext } from "../../context/AppContext";
+
+//komponenty
+import { Card, PokemonDetailsModal } from "../shared";
+
+---------------------------------------- \* ----------------------------------
+XI. Uwagi dotyczące poprawy:
+
+W poprawce wprowadziłem nowe zalecenia dotyczące responsywności, zmiennych środowiskowych i rozszeżeń plików. Przyjęte konwenje opisałem to w dokumentacji.
+Uwzględniłem także większość zaleceń podanych na GitHub'ie.
+
+Punkty, któych nie udało mi się poprawić lub dokończyć to:
+
+- zapis "+10pkt base_experience" - dla wygranego pokemona
+- destrukturyzacja obiektu 'pokemon'.
+- funkcja "usuń z areny" w komponencie 'PokemonDetailsModal'.
+- nie podzieliłem komponentu 'Arena' - jest to duży komponenty ale wynika to z jego spoecyfiki i stylowania za pomoncą biblioteki 'styled-components'. Sama logika w tym komponencie zajmuje niecałe 40 linii, reszta to stylowanie i responsywność.
+
+---------------------------------------- \* ----------------------------------
+XII.
 
 # React + Vite
 
@@ -72,4 +107,5 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md)
   uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-  ------------------------------------------ \* --------------------------------
+
+------------------------------------------ \* --------------------------------

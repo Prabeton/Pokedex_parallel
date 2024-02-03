@@ -4,7 +4,10 @@ import { useContext } from "react";
 import * as Yup from "yup";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+
 import { AppContext } from "../context/AppContext";
+
+const VITE_USERS = import.meta.env.VITE_USERS;
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -14,7 +17,7 @@ const validationSchema = Yup.object({
 });
 
 const getUsers = async () => {
-  const { data } = await axios.get("http://localhost:3002/users");
+  const { data } = await axios.get(VITE_USERS);
   return data;
 };
 

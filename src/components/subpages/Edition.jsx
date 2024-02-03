@@ -1,13 +1,17 @@
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { useContext } from "react";
+import { useSnackbar } from "notistack";
+
 import { AppContext } from "../../context/AppContext";
+
 import List from "./List";
 
+const VITE_NEWPOKEMONS = import.meta.env.VITE_NEWPOKEMONS;
+
 const Container = styled.div`
-  max-width: 1440px;
+  max-width: 1900px;
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -16,6 +20,28 @@ const Container = styled.div`
   flex-direction: column;
   padding-bottom: 30px;
   margin-top: 30px;
+
+  @media (min-width: 1721px) and (max-width: 1920px) {
+    max-width: 1721px;
+  }
+  @media (min-width: 1441px) and (max-width: 1720px) {
+    max-width: 1441px;
+  }
+  @media (min-width: 1281px) and (max-width: 1440px) {
+    max-width: 1281px;
+  }
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    max-width: 1025px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    max-width: 769px;
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    max-width: 481px;
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    max-width: 320px;
+  }
 `;
 
 const NoLogin = styled.div`
@@ -40,7 +66,19 @@ const Workshop = styled.div`
   margin-bottom: 120px;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    flex-direction: column;
+    padding-bottom: 40px;
+    gap: 40px;
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    flex-direction: column;
+    padding-bottom: 40px;
+    gap: 40px;
+  }
 `;
+
 const Writing = styled.div`
   width: 250px;
   height: 100px;
@@ -69,7 +107,19 @@ const Create = styled.button`
     color: #9c090c;
     background-color: #000;
   }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    width: 190px;
+  }
+
+  &:disabled {
+    border: 5px solid #ff0000;
+    color: #ff0000;
+    background-color: #333;
+    cursor: not-allowed;
+  }
 `;
+
 const EditCardContainer = styled.div`
   width: 240px;
   height: 350px;
@@ -94,19 +144,20 @@ const Img = styled.img`
 `;
 
 const Name = styled.input`
-  background-color: green;
-  width: 130px;
-  height: 30px;
-  border: 3px solid #163707;
-  border-radius: 8px;
-  margin-top: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  width: 130px;
+  height: 30px;
+  margin-top: 10px;
   padding-bottom: 10px;
   font-size: 22px;
   color: #000;
   font-weight: 600;
+  background-color: green;
+  border: 3px solid #163707;
+  border-radius: 8px;
   caret-color: #000;
 
   &:focus {
@@ -125,24 +176,23 @@ const Propers = styled.div`
 `;
 
 const Proper = styled.input`
-  background-color: green;
-  width: 100px;
-  height: 40px;
-  border: 3px solid #163707;
-  border-radius: 8px;
-  margin-top: 20px;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-bottom: 10px;
+  width: 100px;
+  height: 40px;
+  margin-top: 20px;
+  padding: 0;
   font-size: 12px;
   font-family: Inter;
   color: #000;
   font-weight: 600;
-  padding: 0;
+  background-color: green;
+  border: 3px solid #163707;
+  border-radius: 8px;
   caret-color: #000;
-  position: relative;
 
   &:focus {
     outline: none;
@@ -206,6 +256,7 @@ const ProperDiv = styled.div`
 `;
 
 const Edition = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const { isLogin, workshopBody, clearWorkshopBody, actualityPokemonsTable } =
     useContext(AppContext);
 
@@ -269,11 +320,11 @@ const Edition = () => {
 
   const saveNewPokemon = () => {
     axios
-      .post("http://localhost:3002/newPokemons", newPokemon)
+      .post(VITE_NEWPOKEMONS, newPokemon)
       .then((response) => {
         console.log("Dodano do NewPokemons:", response.data);
         axios
-          .get("http://localhost:3002/newPokemons")
+          .get(VITE_NEWPOKEMONS)
           .then((updatedData) => {
             actualityPokemonsTable(updatedData.data);
             console.log(
@@ -353,7 +404,11 @@ const Edition = () => {
             <Create
               onClick={() => {
                 saveNewPokemon(newPokemon);
-              }}>
+                enqueueSnackbar("Pomyslnie utworzyles nowego pokemona", {
+                  variant: "success",
+                });
+              }}
+              disabled={!workshopBody}>
               Create a New Pokemon
             </Create>
           </Workshop>

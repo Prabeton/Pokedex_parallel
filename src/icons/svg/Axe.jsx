@@ -1,15 +1,11 @@
-/* eslint-disable-next-line */
-function Topor({ size, fill, stroke }) {
+function Axe({ size, fill }) {
   return (
     <svg
       fill={fill}
       width={size}
       height={size}
       viewBox="0 0 512 512"
-      version="1.1"
-      xmlSpace="preserve"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlnsXlink="http://www.w3.org/1999/xlink">
+      version="1.1">
       <g id="Axe">
         <g id="XMLID_1374_">
           <path
@@ -49,4 +45,4 @@ function Topor({ size, fill, stroke }) {
   );
 }
 
-export default Topor;
+export default Axe;

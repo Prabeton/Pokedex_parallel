@@ -1,17 +1,48 @@
-import styled from "styled-components";
-import { Link, useLocation } from "react-router-dom";
 import { useContext } from "react";
+import { Link, useLocation } from "react-router-dom";
+import styled from "styled-components";
+
 import { AppContext } from "../../context/AppContext";
 
-const isLogin = false;
-
 const Container = styled.div`
-  width: 1400px;
   height: 70px;
-  max-width: 1440px;
+  width: 1900px;
+  max-width: 1900px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (min-width: 1721px) and (max-width: 1920px) {
+    max-width: 1721px;
+  }
+  @media (min-width: 1441px) and (max-width: 1720px) {
+    max-width: 1441px;
+  }
+  @media (min-width: 1281px) and (max-width: 1440px) {
+    max-width: 1281px;
+  }
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    max-width: 1025px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    max-width: 769px;
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    max-width: 481px;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    height: auto;
+    gap: 20px;
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    max-width: 320px;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    height: auto;
+    gap: 20px;
+  }
 `;
 
 const Logo = styled.div`
@@ -23,6 +54,19 @@ const Logo = styled.div`
   align-items: center;
   justify-content: center;
   text-shadow: -3px -3px 3px rgba(255, 255, 0, 0.6);
+
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    font-size: 40px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    font-size: 35px;
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    font-size: 52px;
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    font-size: 52px;
+  }
 `;
 
 const Button = styled.button`
@@ -51,6 +95,14 @@ const Button = styled.button`
   }
 `;
 
+const Links = styled.div`
+  display: flex;
+
+  @media (min-width: 320px) and (max-width: 480px) {
+    flex-direction: column;
+  }
+`;
+
 const LinkItem = styled.div`
   padding: 15px;
 
@@ -60,7 +112,7 @@ const LinkItem = styled.div`
 `;
 
 const StyledLink = styled(Link)`
-  color: #111;
+  color: ${(props) => (props.isDarkTheme ? "#cce628" : "#ab5eb2")};
   text-decoration: none;
   font-family: "Pokemon-Hollow";
   cursor: pointer;
@@ -76,52 +128,81 @@ const StyledLink = styled(Link)`
     color: #e3b10e;
     font-family: "Pokemon-Solid";
   }
+
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    font-size: 20px;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    font-size: 16px;
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    font-size: 14px;
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    font-size: 14px;
+  }
 `;
 
 const Navbar = () => {
-  const { toggleTheme, isLogin, falseLogin } = useContext(AppContext);
+  const { toggleTheme, isDarkTheme, isLogin, falseLogin } =
+    useContext(AppContext);
   const { pathname } = useLocation();
 
   return (
     <Container>
       <Logo>Pokedex</Logo>
-      <LinkItem className={pathname === "/home" && "active"}>
-        <StyledLink to="/home">HOME</StyledLink>
-      </LinkItem>
-      <LinkItem className={pathname === "/arena" && "active"}>
-        <StyledLink to="/arena">ARENA</StyledLink>
-      </LinkItem>
-      <LinkItem className={pathname === "/favorites" && "active"}>
-        <StyledLink to="/favorites">ULUBIONE</StyledLink>
-      </LinkItem>
-      {isLogin ? (
-        <>
-          <LinkItem className={pathname === "/edition" && "active"}>
-            <StyledLink to="/edition">EDYCJA</StyledLink>
-          </LinkItem>
-          <LinkItem>
-            <StyledLink
-              to="/logout"
-              onClick={async () => {
-                falseLogin();
-                localStorage.removeItem("isLogin");
-                localStorage.removeItem("userToLogin");
-                localStorage.removeItem("isDarkTheme");
-              }}>
-              WYLOGUJ
-            </StyledLink>
-          </LinkItem>
-        </>
-      ) : (
-        <>
-          <LinkItem className={pathname === "/login" && "active"}>
-            <StyledLink to="/login">LOGOWANIE</StyledLink>
-          </LinkItem>
-          <LinkItem className={pathname === "/register" && "active"}>
-            <StyledLink to="/register">REJESTRACJA</StyledLink>
-          </LinkItem>
-        </>
-      )}
+      <Links>
+        <LinkItem className={pathname === "/home" && "active"}>
+          <StyledLink to="/home" isDarkTheme={isDarkTheme}>
+            HOME
+          </StyledLink>
+        </LinkItem>
+        <LinkItem className={pathname === "/arena" && "active"}>
+          <StyledLink to="/arena" isDarkTheme={isDarkTheme}>
+            ARENA
+          </StyledLink>
+        </LinkItem>
+        <LinkItem className={pathname === "/favorites" && "active"}>
+          <StyledLink to="/favorites" isDarkTheme={isDarkTheme}>
+            ULUBIONE
+          </StyledLink>
+        </LinkItem>
+        {isLogin ? (
+          <>
+            <LinkItem className={pathname === "/edition" && "active"}>
+              <StyledLink to="/edition" isDarkTheme={isDarkTheme}>
+                EDYCJA
+              </StyledLink>
+            </LinkItem>
+            <LinkItem>
+              <StyledLink
+                to="/logout"
+                isDarkTheme={isDarkTheme}
+                onClick={async () => {
+                  falseLogin();
+                  localStorage.removeItem("isLogin");
+                  localStorage.removeItem("userToLogin");
+                  localStorage.removeItem("isDarkTheme");
+                }}>
+                WYLOGUJ
+              </StyledLink>
+            </LinkItem>
+          </>
+        ) : (
+          <>
+            <LinkItem className={pathname === "/login" && "active"}>
+              <StyledLink to="/login" isDarkTheme={isDarkTheme}>
+                LOGOWANIE
+              </StyledLink>
+            </LinkItem>
+            <LinkItem className={pathname === "/register" && "active"}>
+              <StyledLink to="/register" isDarkTheme={isDarkTheme}>
+                REJESTRACJA
+              </StyledLink>
+            </LinkItem>
+          </>
+        )}
+      </Links>
       <Button onClick={toggleTheme}>toggle</Button>
     </Container>
   );

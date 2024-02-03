@@ -1,5 +1,11 @@
-import { createGlobalStyle } from "styled-components";
 import { useContext } from "react";
+import { createGlobalStyle } from "styled-components";
+
+import "normalize.css";
+import "@fontsource/inter";
+import "@fontsource/josefin-sans";
+import "@fontsource/press-start-2p";
+
 import { AppContext } from "../context/AppContext";
 
 const darkBG = `
@@ -10,6 +16,19 @@ const lightBG = `
 `;
 
 const GlobalStyle = createGlobalStyle`
+	@font-face {
+        font-family: "Pokemon-Hollow";
+        src: url("./public/fonts/Pokemon-Hollow.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: "Pokemon-Solid";
+        src: url("./public/fonts/Pokemon-Solid.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+    }
+	
 	body {
 		${({ isDarkTheme }) => (!isDarkTheme ? darkBG : lightBG)}
 		color: #aae30e;

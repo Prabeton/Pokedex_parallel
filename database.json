@@ -76,6 +76,27 @@
       "password": "qqqqqq",
       "confirmPassword": "qqqqqq",
       "id": 11
+    },
+    {
+      "name": "env",
+      "email": "env@env.env",
+      "password": "qqqqqq",
+      "confirmPassword": "qqqqqq",
+      "id": 12
+    },
+    {
+      "name": "Walidator",
+      "email": "yup@yup.yup",
+      "password": "Yupyup100%",
+      "confirmPassword": "Yupyup100%",
+      "id": 13
+    },
+    {
+      "name": "Bond",
+      "email": "bond@bond.pl",
+      "password": "Bond100%",
+      "confirmPassword": "Bond100%",
+      "id": 14
     }
   ],
   "battles": [],
@@ -196,6 +217,114 @@
       "abilities": "KALESON",
       "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/141.png",
       "id": "60230a7b-1101-4108-85a5-bcad7e281d9c"
+    },
+    {
+      "name": "BURAK",
+      "weight": 190,
+      "height": 11,
+      "base_experience": 142,
+      "abilities": "blaze",
+      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png",
+      "id": "bb76af44-6e90-40d9-aa99-c8981a98f885"
+    },
+    {
+      "name": "AREK",
+      "weight": 90,
+      "height": 5,
+      "base_experience": 63,
+      "abilities": "pierdy",
+      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
+      "id": "e01ee04e-2fe4-4d56-a849-555a2ec9b2f9"
+    },
+    {
+      "name": "AREK 1",
+      "weight": 590,
+      "height": 18,
+      "base_experience": "1809",
+      "abilities": "kula ognia",
+      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/142.png",
+      "id": "7a280eaf-3277-475d-9858-74cdae8e0a2d"
+    },
+    {
+      "name": "BANDZIOR",
+      "weight": 905,
+      "height": 17,
+      "base_experience": 267,
+      "abilities": "blaze",
+      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png",
+      "id": "04df275c-c95c-481f-aa03-3606cea96ebf"
+    },
+    {
+      "name": "DUPA-DRON",
+      "weight": 69,
+      "height": 7,
+      "base_experience": 64,
+      "abilities": "overgrow",
+      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+      "id": "57810612-a64a-41f1-96fe-046dbcd62e7e"
+    },
+    {
+      "name": "snacbar",
+      "weight": 1000,
+      "height": 20,
+      "base_experience": 263,
+      "abilities": "overgrow",
+      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png",
+      "id": "849c2153-8beb-47a2-8df3-4667e7374d40"
+    },
+    {
+      "name": "FALSE",
+      "weight": 905,
+      "height": 17,
+      "base_experience": 267,
+      "abilities": "blaze",
+      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png",
+      "id": "62f0ad12-0e35-41aa-961f-c7e89507ddfd"
+    },
+    {
+      "name": "22222",
+      "weight": 1000,
+      "height": 20,
+      "base_experience": 263,
+      "abilities": "overgrow",
+      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png",
+      "id": "1a7a1d1c-6533-4666-a9dd-2cb6c98632f3"
+    },
+    {
+      "name": "venusaur",
+      "weight": 1000,
+      "height": 20,
+      "base_experience": 263,
+      "abilities": "overgrow",
+      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png",
+      "id": "738e91e3-bc4d-45c5-96aa-d7874659baf5"
+    },
+    {
+      "name": "allowed-max",
+      "weight": 125,
+      "height": 15,
+      "base_experience": 158,
+      "abilities": "shield-dust",
+      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/49.png",
+      "id": "89742f61-73cf-4f79-a98b-3186c877c927"
+    },
+    {
+      "name": "KIKSTER",
+      "weight": "1251",
+      "height": 15,
+      "base_experience": 158,
+      "abilities": "shield-dust",
+      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/49.png",
+      "id": "5b6fa8b0-845e-4844-b7f5-5940aaee73d7"
+    },
+    {
+      "name": "PRZEM-BIT",
+      "weight": "5501",
+      "height": 16,
+      "base_experience": "1591",
+      "abilities": "inner-focus",
+      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/42.png",
+      "id": "f9ef8c13-85e5-4b63-b0eb-6a9bdfc094ca"
     }
   ],
   "favorites": [
@@ -209,49 +338,22 @@
       "id": "92c5313c-5f22-40c8-8ca4-41df2dc80eff"
     },
     {
-      "name": "WAMPIR",
-      "weight": 590,
-      "height": 18,
-      "base_experience": 180,
-      "abilities": "zęby",
-      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/142.png",
-      "id": "39848ee9-9fc5-4347-9e19-173b24e82a22"
+      "name": "BANDZIOR",
+      "weight": 905,
+      "height": 17,
+      "base_experience": 267,
+      "abilities": "blaze",
+      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png",
+      "id": "04df275c-c95c-481f-aa03-3606cea96ebf"
     },
     {
-      "name": "WAMPIR 5",
-      "weight": 590,
-      "height": 18,
-      "base_experience": 180,
-      "abilities": "zęby 5",
-      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/142.png",
-      "id": "69dc4f93-2600-4ecb-b770-a43903a7f19c"
-    },
-    {
-      "name": "wartortle",
-      "weight": 225,
-      "height": 10,
-      "base_experience": 142,
-      "abilities": "torrent",
-      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png",
-      "id": 8
-    },
-    {
-      "name": "kabutops",
-      "weight": 405,
-      "height": 13,
-      "base_experience": 173,
-      "abilities": "swift-swim",
-      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/141.png",
-      "id": 141
-    },
-    {
-      "name": "KOSMITA",
-      "weight": 225,
-      "height": 10,
-      "base_experience": 142,
-      "abilities": "Kosmiczny Pierd",
-      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png",
-      "id": "5de3535c-bf68-4648-9c0c-da67d27953cc"
+      "name": "pidgeot",
+      "weight": 395,
+      "height": 15,
+      "base_experience": 216,
+      "abilities": "keen-eye",
+      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/18.png",
+      "id": 18
     },
     {
       "name": "venomoth",
@@ -263,13 +365,22 @@
       "id": 49
     },
     {
-      "name": "STRASZY",
-      "weight": 526,
-      "height": 16,
-      "base_experience": "450",
-      "abilities": "Warkotong",
-      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/145.png",
-      "id": "b8f2bd62-5a59-481a-a12c-db178998f18a"
+      "name": "AREK",
+      "weight": 90,
+      "height": 5,
+      "base_experience": 63,
+      "abilities": "pierdy",
+      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
+      "id": "e01ee04e-2fe4-4d56-a849-555a2ec9b2f9"
+    },
+    {
+      "name": "WAMPIR 5",
+      "weight": 590,
+      "height": 18,
+      "base_experience": 180,
+      "abilities": "zęby 5",
+      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/142.png",
+      "id": "69dc4f93-2600-4ecb-b770-a43903a7f19c"
     },
     {
       "name": "PRZEMO",
@@ -290,40 +401,40 @@
       "id": "bd9486bf-4a63-484b-838a-425fd032254d"
     },
     {
-      "name": "Kazior",
-      "weight": 225,
-      "height": "100",
-      "base_experience": "200",
-      "abilities": "tyranus",
-      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png",
-      "id": "82275c32-ce9f-4493-a4f4-12052ac6e2e6"
-    },
-    {
-      "name": "AROSLAW",
-      "weight": 600,
-      "height": "123",
-      "base_experience": "400",
-      "abilities": "LASERY",
-      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/31.png",
-      "id": "d34667c8-39a5-4820-b483-eac94fe1a2b8"
-    },
-    {
-      "name": "parasect",
-      "weight": 295,
-      "height": 10,
-      "base_experience": 142,
-      "abilities": "effect-spore",
-      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/47.png",
-      "id": 47
-    },
-    {
-      "name": "venusaur",
-      "weight": 1000,
-      "height": 20,
-      "base_experience": 263,
+      "name": "DUPA-DRON",
+      "weight": 69,
+      "height": 7,
+      "base_experience": 64,
       "abilities": "overgrow",
-      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png",
-      "id": 3
+      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+      "id": "57810612-a64a-41f1-96fe-046dbcd62e7e"
+    },
+    {
+      "name": "butterfree",
+      "weight": 320,
+      "height": 11,
+      "base_experience": 198,
+      "abilities": "compound-eyes",
+      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/12.png",
+      "id": 12
+    },
+    {
+      "name": "WAMPIR",
+      "weight": 590,
+      "height": 18,
+      "base_experience": 180,
+      "abilities": "zęby",
+      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/142.png",
+      "id": "39848ee9-9fc5-4347-9e19-173b24e82a22"
+    },
+    {
+      "name": "PRZEM-BIT",
+      "weight": "5501",
+      "height": 16,
+      "base_experience": "1591",
+      "abilities": "inner-focus",
+      "imageURL": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/42.png",
+      "id": "f9ef8c13-85e5-4b63-b0eb-6a9bdfc094ca"
     }
   ]
 }

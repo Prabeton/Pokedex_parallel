@@ -5,6 +5,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
+const VITE_USERS = import.meta.env.VITE_USERS;
+
 const validationSchema = Yup.object({
   name: Yup.string().required("Imię jest wymagane").min(2, "Minimum 2 znaki"),
 
@@ -13,7 +15,16 @@ const validationSchema = Yup.object({
     .required("Podanie maila jest wymagane"),
 
   password: Yup.string()
-    .min(6, "Minimum 6 znaków")
+    .min(8, "Minimum 8 znaków")
+    .matches(/(?=.*[0-9])/, "Hasło musi zawierać przynajmniej jedną cyfrę")
+    .matches(
+      /(?=.*[!@#$%^&*])/,
+      "Hasło musi zawierać przynajmniej jeden znak specjalny (!@#$%^&*)"
+    )
+    .matches(
+      /(?=.*[A-Z])/,
+      "Hasło musi zawierać przynajmniej jedną wielką literę"
+    )
     .required("Hasło jest wymagane"),
 
   confirmPassword: Yup.string()
@@ -22,7 +33,7 @@ const validationSchema = Yup.object({
 });
 
 const getUsers = async () => {
-  const { data } = await axios.get("http://localhost:3002/users");
+  const { data } = await axios.get(VITE_USERS);
   return data;
 };
 const postUser = async (user, enqueueSnackbar, navigate) => {
@@ -30,11 +41,13 @@ const postUser = async (user, enqueueSnackbar, navigate) => {
   const exists = users.some((exi) => exi.email === user.email);
   console.log("User exists:", exists);
   if (exists) {
-    alert("Taki użytkownik już istnieje w naszej bazie Userów");
+    enqueueSnackbar("Taki użytkownik już istnieje w naszej bazie Userów", {
+      variant: "error",
+    });
     return;
   } else {
     try {
-      const response = await axios.post("http://localhost:3002/users", user);
+      const response = await axios.post(VITE_USERS, user);
       if (response.status === 201) {
         enqueueSnackbar("Twoje dane zostały wysłane", { variant: "success" });
         navigate("/login");
