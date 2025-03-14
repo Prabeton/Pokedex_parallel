@@ -10,7 +10,7 @@ import PokemonDetailsModal from "../shared/PokemonDetailsModal";
 
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
-import { API_URL } from '../../config/api';
+
 import { getFromStorage, LOCAL_STORAGE_KEYS } from '../../utils/localStorage';
 
 const Container = styled.div`
