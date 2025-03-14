@@ -10,6 +10,8 @@ import PokemonDetailsModal from "../shared/PokemonDetailsModal";
 
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
+import { API_URL } from '../../config/api';
+import { getFromStorage, LOCAL_STORAGE_KEYS } from '../../utils/localStorage';
 
 const Container = styled.div`
   max-width: 1440px;
@@ -98,21 +100,13 @@ const List = () => {
   const { pokemons } = useGetPokemons();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3002/newPokemons")
-      .then((response) => {
-        const newPokemons = response.data;
-        console.log("newPokemons:", newPokemons);
+    const newPokemons = getFromStorage(LOCAL_STORAGE_KEYS.NEW_POKEMONS) || [];
 
-        if (pokemons) {
-          setAllPokemons([...pokemons, ...newPokemons]);
-        } else {
-          setAllPokemons([...newPokemons]);
-        }
-      })
-      .catch((error) => {
-        console.error("Błąd odczytu nowych pokemonów:", error);
-      });
+    if (pokemons) {
+      setAllPokemons([...pokemons, ...newPokemons]);
+    } else {
+      setAllPokemons([...newPokemons]);
+    }
   }, [actualityPokemonsTable, newPokemonsTable, pokemons]);
 
   const itemsPerPage = 15;
@@ -122,8 +116,8 @@ const List = () => {
 
   const filteredPokemons = searchTerm
     ? allPokemons.filter((pokemon) =>
-        pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+      pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
     : allPokemons;
 
   // ----------------------------------------------------------------

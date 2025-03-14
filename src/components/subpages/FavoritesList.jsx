@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import Card from "../shared/Card";
 import PokemonDetailsModal from "../shared/PokemonDetailsModal";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
+import { getFromStorage, LOCAL_STORAGE_KEYS } from '../../utils/localStorage';
 
 const Container = styled.div`
   max-width: 1440px;
@@ -65,15 +65,10 @@ function FavoritesList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
   const { newFavoritesTable } = useContext(AppContext);
+
   useEffect(() => {
-    axios
-      .get("http://localhost:3002/favorites")
-      .then((response) => {
-        setFavorites(response.data);
-      })
-      .catch((error) => {
-        console.error("Błąd pobierania ulubionych:", error);
-      });
+    const storedFavorites = getFromStorage(LOCAL_STORAGE_KEYS.FAVORITES) || [];
+    setFavorites(storedFavorites);
   }, [newFavoritesTable]);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -91,6 +86,7 @@ function FavoritesList() {
   const handleCardClick = (pokemon) => {
     setSelectedPokemon(pokemon);
   };
+
   const handleCloseModal = () => {
     setSelectedPokemon(null);
   };
@@ -101,7 +97,6 @@ function FavoritesList() {
         <Prev onClick={handlePrevPage} disabled={currentPage === 1}>
           P R E V
         </Prev>
-
         <Next onClick={handleNextPage} disabled={endIndex >= favorites.length}>
           N E X T
         </Next>
@@ -114,7 +109,7 @@ function FavoritesList() {
       )}
       {favorites.length > 0 ? (
         <CardContainer>
-          {currentPokemonFavoritesPage.map((pokemon, index) => (
+          {currentPokemonFavoritesPage.map((pokemon) => (
             <Card
               onClick={() => handleCardClick(pokemon)}
               key={pokemon.id}
@@ -129,7 +124,7 @@ function FavoritesList() {
         </CardContainer>
       ) : (
         <div>
-          Tutaj beda widoczne karty ulubionych pokemonów jak tylko je dodasz.
+          Tutaj będą widoczne karty ulubionych pokemonów jak tylko je dodasz.
         </div>
       )}
     </Container>

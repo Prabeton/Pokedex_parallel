@@ -6,6 +6,7 @@ import CircleMechTwo from "../../icons/svg/CircleMechTwo";
 import Topor from "../../icons/svg/Topor";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
+import { getFromStorage, saveToStorage, LOCAL_STORAGE_KEYS } from '../../utils/localStorage';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -182,50 +183,19 @@ const PokemonDetailsModal = ({ pokemon, onClose }) => {
   };
 
   const addToFavorites = () => {
-    axios
-      .post("http://localhost:3002/favorites", dataToSaveFavorites)
-      .then((response) => {
-        console.log("Dodano do ulubionych:", response.data);
-        setIsFavorites(true);
-      })
-      .catch((error) => {
-        console.error("Błąd dodawania do ulubionych:", error);
-      });
-    axios
-      .get("http://localhost:3002/favorites")
-      .then((updatedData) => {
-        actualityFavoritesTable(updatedData);
-      })
-      .catch((error) => {
-        console.error(
-          "Błąd pobierania zaktualizowanej tablicy nowych pokemonów:",
-          error
-        );
-      });
+    const currentFavorites = getFromStorage(LOCAL_STORAGE_KEYS.FAVORITES) || [];
+    const updatedFavorites = [...currentFavorites, dataToSaveFavorites];
+    saveToStorage(LOCAL_STORAGE_KEYS.FAVORITES, updatedFavorites);
+    setIsFavorites(true);
+    actualityFavoritesTable(updatedFavorites);
   };
 
   const removeFromFavorites = () => {
-    axios
-      .delete(`http://localhost:3002/favorites/${pokemon.id}`)
-      .then((response) => {
-        console.log("Usunięto z ulubionych:", response.data);
-        setIsFavorites(false);
-        actualityFavoritesTable();
-      })
-      .catch((error) => {
-        console.error("Błąd usuwania z ulubionych:", error);
-      });
-    axios
-      .get("http://localhost:3002/favorites")
-      .then((updatedData) => {
-        actualityFavoritesTable(updatedData);
-      })
-      .catch((error) => {
-        console.error(
-          "Błąd pobierania zaktualizowanej tablicy nowych pokemonów:",
-          error
-        );
-      });
+    const currentFavorites = getFromStorage(LOCAL_STORAGE_KEYS.FAVORITES) || [];
+    const updatedFavorites = currentFavorites.filter(fav => fav.id !== pokemon.id);
+    saveToStorage(LOCAL_STORAGE_KEYS.FAVORITES, updatedFavorites);
+    setIsFavorites(false);
+    actualityFavoritesTable(updatedFavorites);
   };
 
   const handleClickFavorites = () => {
@@ -238,18 +208,11 @@ const PokemonDetailsModal = ({ pokemon, onClose }) => {
   };
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3002/favorites")
-      .then((response) => {
-        const favorites = response.data;
-        const isPokemonFavorite = favorites.some(
-          (favorite) => favorite.id === pokemon.id
-        );
-        setIsFavorites(isPokemonFavorite);
-      })
-      .catch((error) => {
-        console.error("Błąd odczytu ulubionych:", error);
-      });
+    const favorites = getFromStorage(LOCAL_STORAGE_KEYS.FAVORITES) || [];
+    const isPokemonFavorite = favorites.some(
+      (favorite) => favorite.id === pokemon.id
+    );
+    setIsFavorites(isPokemonFavorite);
   }, [pokemon.id]);
 
   return (
